@@ -1,0 +1,50 @@
+# Actualizar el sistema
+sudo apt update && sudo apt upgrade -y
+
+# Instalar OpenLDAP y utilidades
+sudo apt install slapd ldap-utils -y
+
+## CONTRASEÑA DE ADMIN
+Proy2redes
+
+# Reconfigurar con más opciones
+sudo dpkg-reconfigure slapd
+
+DNS domain name: → freddyfazbear.local
+Organization name: → Freddy Fazbear's Pizza
+
+# Crear archivo con la estructura base
+nano base.ldif
+(revisar archivo aparte)
+
+# Aplicar cambios anteriores
+ldapadd -x -D "cn=admin,dc=freddyfazbear,dc=local" -W -f base.ldif
+
+# Crear usuarios
+## 1. generar contraseñas para cada usuario
+slappasswd
+
+## Archivo de configuración
+nano usuarios.ldif
+(revisar archivo aparte)
+
+
+## Aplicar cambios
+ldapadd -x -D "cn=admin,dc=freddyfazbear,dc=local" -W -f usuarios.ldif
+
+# VERIFICACIÓN
+# Verificar que está corriendo
+sudo systemctl status slapd
+
+# Ver el puerto (debe estar escuchando en 389)
+sudo netstat -tulpn | grep 389
+
+# DESDE IT
+# Instalar cliente LDAP
+sudo apt install ldap-utils -y
+
+# Probar búsqueda
+ldapsearch -x -H ldap://192.168.30.12:389 -b "dc=freddyfazbear,dc=local" -LLL
+
+# Probar con telnet (verificar conectividad TCP)
+telnet 192.168.30.12:389 389

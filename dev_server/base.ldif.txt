@@ -1,0 +1,7 @@
+dn: ou=users,dc=freddyfazbear,dc=local
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=freddyfazbear,dc=local
+objectClass: organizationalUnit
+ou: groups
