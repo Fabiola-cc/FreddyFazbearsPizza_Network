@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freddy Fazbear's Pizza - Donde la Fantasía y la Diversión Cobran Vida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            color: white;
+            padding: 25px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #FFD700;
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .brand-info h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .brand-info p {
+            font-size: 16px;
+            opacity: 0.95;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-bar {
+            background: white;
+            padding: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .nav-bar ul {
+            list-style: none;
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-bar li {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+
+        .nav-bar li:hover {
+            background: #f8f9fa;
+            border-bottom-color: #DC143C;
+        }
+
+        .nav-bar li.active {
+            border-bottom-color: #8B0000;
+            color: #8B0000;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin: 40px 0 25px;
+            color: #8B0000;
+            border-bottom: 3px solid #DC143C;
+            padding-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .animatronics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .animatronic-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 40rem;
+        }
+
+        .animatronic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .animatronic-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #2d1b47 0%, #4a1a6b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 4px solid #DC143C;
+            position: relative;
+        }
+
+        .animatronic-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-placeholder-text {
+            color: #FFD700;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .animatronic-info {
+            padding: 25px;
+        }
+
+        .animatronic-info h3 {
+            font-size: 22px;
+            color: #8B0000;
+            margin-bottom: 12px;
+        }
+
+        .animatronic-info p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            font-size: 24px;
+            color: #8B0000;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #DC143C;
+        }
+
+        .menu-list, .package-list {
+            list-style: none;
+        }
+
+        .menu-list li, .package-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+            color: #495057;
+            font-size: 15px;
+        }
+
+        .menu-list li:last-child, .package-list li:last-child {
+            border-bottom: none;
+        }
+
+        .menu-list li::before {
+            content: "▸";
+            color: #DC143C;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .package-list li::before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .contact-info {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            color: #8B0000;
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 15px;
+        }
+
+        .contact-label {
+            font-weight: bold;
+            color: #8B0000;
+            min-width: 100px;
+        }
+
+        .gallery-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #2d1b47 0%, #4a1a6b 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #DC143C;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .disclaimer {
+            background: #495057;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #FFD700;
+            text-align: left;
+        }
+
+        .disclaimer p {
+            margin: 10px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .disclaimer strong {
+            color: #FFD700;
+        }
+
+        .footer-info {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 30px 20px;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <img src="https://static.wikia.nocookie.net/freddy-fazbear-entertainment/images/1/1a/FFP_logo_1983.png/revision/latest/scale-to-width-down/700?cb=20250322023351" alt="Freddy Fazbear Logo">
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <ul>
+            <li class="active">Inicio</li>
+            <li>Nuestros Personajes</li>
+            <li>Menú</li>
+            <li>Fiestas & Eventos</li>
+            <li>Galería</li>
+            <li>Contacto</li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h2>¡Bienvenidos a la Diversión Familiar!</h2>
+            <p>Freddy Fazbear's Pizza es el destino perfecto para celebraciones inolvidables, fiestas de cumpleaños y diversión en familia. Disfruta de deliciosa pizza artesanal, emocionantes juegos arcade y espectáculos en vivo con nuestros queridos animatrónicos: Freddy, Bonnie, Chica y Foxy. ¡Una experiencia mágica te espera!</p>
+        </div>
+
+        <h2 class="section-title">Conoce a Nuestros Amigos Animatrónicos</h2>
+        <div class="animatronics-grid">
+            <div class="animatronic-card">
+                <div class="animatronic-image">
+                    <img src="https://wallpapers.com/images/featured/freddy-fazbear-pictures-co3ta5c0d8jg5c1h.jpg" alt="Freddy Fazbear">
+                </div>
+                <div class="animatronic-info">
+                    <h3>Freddy Fazbear</h3>
+                    <p>El carismático líder de la banda y rostro de nuestro restaurante. Con su sombrero de copa y micrófono en mano, Freddy te dará la bienvenida más cálida y te hará sentir como en casa.</p>
+                </div>
+            </div>
+
+            <div class="animatronic-card">
+                <div class="animatronic-image">
+                    <img src="https://i.pinimg.com/736x/d8/67/e1/d867e190bca4c3ca2da05815dc3944b1.jpg" alt="Bonnie">
+                </div>
+                <div class="animatronic-info">
+                    <h3>Bonnie el Conejo</h3>
+                    <p>El talentoso guitarrista de la banda con su guitarra roja característica. Bonnie es conocido por sus increíbles solos y su energía contagiosa que hace bailar a todos los niños.</p>
+                </div>
+            </div>
+
+            <div class="animatronic-card">
+                <div class="animatronic-image">
+                    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/52671c08-c1d4-443a-871c-2bbc036d9dbe/delc929-b056109e-a12e-4274-98b6-6cac726cca7e.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi81MjY3MWMwOC1jMWQ0LTQ0M2EtODcxYy0yYmJjMDM2ZDlkYmUvZGVsYzkyOS1iMDU2MTA5ZS1hMTJlLTQyNzQtOThiNi02Y2FjNzI2Y2NhN2UucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.U5TOVO0D32viupgC1nWpp3AAdaonP1p0Wn2nxlFK8xQ" alt="Chica">
+                </div>
+                <div class="animatronic-info">
+                    <h3>Chica la Gallina</h3>
+                    <p>La dulce Chica, nuestra chef estrella, siempre tiene su delicioso cupcake "Let's Eat". Es la favorita de los más pequeños y nunca falta en los cumpleaños especiales.</p>
+                </div>
+            </div>
+
+            <div class="animatronic-card">
+                <div class="animatronic-image">
+                    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/52671c08-c1d4-443a-871c-2bbc036d9dbe/deowswg-54fafb2b-29b7-497c-89a9-a3b7a8a4e967.png/v1/fill/w_894,h_894/_blender_fnaf__ufmp_fnaf_1_foxy_2_9_port_done_by_razvanandrei123_deowswg-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTkyMCIsInBhdGgiOiIvZi81MjY3MWMwOC1jMWQ0LTQ0M2EtODcxYy0yYmJjMDM2ZDlkYmUvZGVvd3N3Zy01NGZhZmIyYi0yOWI3LTQ5N2MtODlhOS1hM2I3YThhNGU5NjcucG5nIiwid2lkdGgiOiI8PTE5MjAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.zk2OZQzal0V9obBC4kwD_s78L-9_4ibEFhHSSXYbod8" alt="Foxy">
+                </div>
+                <div class="animatronic-info">
+                    <h3>Foxy el Pirata</h3>
+                    <p>¡Arr! El aventurero pirata de Pirate Cove. Foxy te llevará a emocionantes aventuras en alta mar con sus historias de tesoros escondidos y viajes épicos. ¡Los niños lo adoran!</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Nuestro Delicioso Menú</h2>
+        <div class="content-grid">
+            <div class="info-card">
+                <h3>Pizzas Especiales</h3>
+                <ul class="menu-list">
+                    <li>Pizza Pepperoni Clásica - La favorita de todos</li>
+                    <li>Pizza Suprema Fazbear - Con todos los ingredientes</li>
+                    <li>Pizza Vegetariana Deluxe - Fresca y saludable</li>
+                    <li>Pizza Hawaiana Tropical - Piña y jamón perfectos</li>
+                    <li>Pizza de Queso Extra - Simple pero deliciosa</li>
+                    <li>Pizza BBQ Chicken - Con salsa barbecue especial</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Complementos</h3>
+                <ul class="menu-list">
+                    <li>Alitas Picantes Freddy's - Con salsa especial</li>
+                    <li>Palitos de Queso Crujientes</li>
+                    <li>Ensalada Fresca del Jardín</li>
+                    <li>Papas Fritas Caseras</li>
+                    <li>Refrescos y Bebidas Ilimitadas</li>
+                    <li>Cupcakes de Chica - Postres deliciosos</li>
+                    <li>Helado y Sundaes Variados</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">Paquetes de Fiestas y Eventos</h2>
+        <div class="content-grid">
+            <div class="info-card">
+                <h3>Paquete Básico</h3>
+                <ul class="package-list">
+                    <li>Salón privado por 2 horas</li>
+                    <li>Pizza ilimitada para 15 personas</li>
+                    <li>Bebidas ilimitadas</li>
+                    <li>50 tokens para juegos arcade</li>
+                    <li>Decoración básica de cumpleaños</li>
+                    <li>Visita sorpresa de Freddy</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Paquete Premium</h3>
+                <ul class="package-list">
+                    <li>Salón privado por 3 horas</li>
+                    <li>Pizza y complementos ilimitados para 25 personas</li>
+                    <li>Bebidas y postres ilimitados</li>
+                    <li>100 tokens para juegos arcade</li>
+                    <li>Decoración temática completa</li>
+                    <li>Show privado de 20 minutos con toda la banda</li>
+                    <li>Sesión de fotos con los animatrónicos</li>
+                    <li>Pastel de cumpleaños personalizado</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Paquete Deluxe</h3>
+                <ul class="package-list">
+                    <li>Salón VIP por 4 horas</li>
+                    <li>Menú completo ilimitado para 40 personas</li>
+                    <li>Barra de bebidas y postres premium</li>
+                    <li>200 tokens para juegos arcade</li>
+                    <li>Decoración personalizada temática</li>
+                    <li>Show extendido de 45 minutos</li>
+                    <li>Sesión fotográfica profesional</li>
+                    <li>Pastel de cumpleaños de 3 pisos</li>
+                    <li>Bolsas de regalo para invitados</li>
+                    <li>Acceso exclusivo a Pirate Cove</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">Galería de Momentos Especiales</h2>
+        <div class="gallery-section">
+            <h3 style="color: #8B0000; margin-bottom: 10px;">Recuerdos Inolvidables</h3>
+            <p style="color: #666; margin-bottom: 20px;">Algunos de los momentos más especiales vividos en Freddy Fazbear's Pizza</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://64.media.tumblr.com/436bb1c41a1b5d43c242fb1156643171/tumblr_newnjkpKux1rx9er0o1_1280.png" alt="Galería">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/d/da/FNaF_1_-_Office.jpg/revision/latest?cb=20170106043540&path-prefix=es" alt="Galería">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://static.wikia.nocookie.net/fivenightsatfreddys/images/a/a2/SecurityBreach_DiningArea.png/revision/latest?cb=20210314030148" alt="Galería">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3844d1fd-18be-4dbb-adf7-ae030a91fd15/de0sivf-26d17f8d-82ae-474a-9f45-d2b9bc7cff55.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi8zODQ0ZDFmZC0xOGJlLTRkYmItYWRmNy1hZTAzMGE5MWZkMTUvZGUwc2l2Zi0yNmQxN2Y4ZC04MmFlLTQ3NGEtOWY0NS1kMmI5YmM3Y2ZmNTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.SoPUx9kun0XUoaEguO2_7ujyWpm0FcUDISN2L78-3_M" alt="Galería">
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Información de Contacto</h2>
+        <div class="contact-info">
+            <h3>Visítanos o Contáctanos</h3>
+            <div class="contact-item">
+                <span class="contact-label">Dirección:</span>
+                <span>123 Fazbear Lane, Entertainment District, Ciudad</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Teléfono:</span>
+                <span>(555) 329-2327 | (555) FAZ-BEAR</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Email:</span>
+                <span>info@freddyfazbearspizza.com</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Horario:</span>
+                <span>Lunes a Jueves: 11:00 AM - 9:00 PM<br>Viernes a Domingo: 11:00 AM - 11:00 PM</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Reservaciones:</span>
+                <span>reservas@freddyfazbearspizza.com</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="disclaimer">
+                <p><strong>AVISO LEGAL IMPORTANTE:</strong></p>
+                <p>Esta página web es un proyecto de fans sin fines de lucro y <strong>NO es una página oficial para recaudar fondos</strong>. Este sitio no tiene afiliación comercial con Freddy Fazbear's Pizza, Fazbear Entertainment o cualquier entidad relacionada.</p>
+                <p style="margin-top: 15px;">Todos los derechos de Five Nights at Freddy's (FNAF), incluyendo pero no limitado a: personajes, nombres, logos, diseños, marcas registradas, conceptos, historias y todo material relacionado son propiedad exclusiva de <strong>Scott Cawthon</strong> y de los titulares legales de los derechos de autor correspondientes.</p>
+                <p style="margin-top: 15px;">© Scott Cawthon. Todos los derechos reservados. Five Nights at Freddy's® es una marca registrada. Esta página es creada únicamente con fines de entretenimiento y apreciación de los fans, sin intención de infringir los derechos de autor.</p>
+            </div>
+            <div class="footer-info">
+                Freddy Fazbear's Pizza - Fan Page 2025 | "Where Fantasy and Fun Come to Life!"<br>
+                Este es un proyecto no oficial creado por fans para fans
+            </div>
+        </div>
+    </div>
+</body>
+</html>
