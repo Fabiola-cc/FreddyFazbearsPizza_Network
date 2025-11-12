@@ -1,0 +1,35 @@
+(Estos son comandos utilizados para configurar correctamente la VPN, desde la EC2 OpenVPN-Sever)
+# Descargar script
+wget https://git.io/vpn -O openvpn-install.sh
+
+# Dar permisos
+chmod +x openvpn-install.sh
+
+# Ejecutar configuración para una persona
+sudo ./openvpn-install.sh
+
+# Ver estado
+sudo systemctl status openvpn-server@server
+
+# Agregar configuraciones por usuario
+sudo nano /etc/openvpn/server/server.conf
+en el archivo --> client-config-dir /etc/openvpn/server/ccd
+
+sudo nano /etc/openvpn/server/ccd/personaTI
+--> ifconfig-push 10.8.0.2 255.255.255.0
+--> push "route 192.168.20.0 255.255.255.240"
+
+sudo nano /etc/openvpn/server/ccd/personaRestaurante
+--> ifconfig-push 10.8.0.3 255.255.255.0
+--> push "route 192.168.10.0 255.255.255.224"
+
+# Configurar limitantes por usuario
+sudo iptables -A FORWARD -s 10.8.0.2 -d 192.168.20.0/28 -j ACCEPT # VPN TI acceso a TI
+sudo iptables -A FORWARD -s 10.8.0.2 -d 192.168.10.0/27 -j DROP
+sudo iptables -A FORWARD -s 10.8.0.3 -d 192.168.10.0/27 -j ACCEPT # VPN Restaurante acceso a Restaurante
+sudo iptables -A FORWARD -s 10.8.0.3 -d 192.168.20.0/28 -j DROP
+sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o enX0 -j MASQUERADE
+sudo apt install iptables-persistent -y
+
+# Reiniciar servidor configurado
+sudo systemctl restart openvpn-server@server
