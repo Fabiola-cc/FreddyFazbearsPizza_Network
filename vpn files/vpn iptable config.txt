@@ -22,11 +22,14 @@ sudo nano /etc/openvpn/server/ccd/personaTI
 sudo nano /etc/openvpn/server/ccd/personaRestaurante
 --> ifconfig-push 10.8.0.3 255.255.255.0
 --> push "route 192.168.10.0 255.255.255.224"
+--> push "route 192.168.30.0 255.255.255.240"
 
 # Configurar limitantes por usuario
 sudo iptables -A FORWARD -s 10.8.0.2 -d 192.168.20.0/28 -j ACCEPT # VPN TI acceso a TI
 sudo iptables -A FORWARD -s 10.8.0.2 -d 192.168.10.0/27 -j DROP
+sudo iptables -A FORWARD -s 10.8.0.2 -d 192.168.30.0/28 -j DROP
 sudo iptables -A FORWARD -s 10.8.0.3 -d 192.168.10.0/27 -j ACCEPT # VPN Restaurante acceso a Restaurante
+sudo iptables -A FORWARD -s 10.8.0.3 -d 192.168.30.0/28 -j ACCEPT # también accede a DEV
 sudo iptables -A FORWARD -s 10.8.0.3 -d 192.168.20.0/28 -j DROP
 sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o enX0 -j MASQUERADE
 sudo apt install iptables-persistent -y
