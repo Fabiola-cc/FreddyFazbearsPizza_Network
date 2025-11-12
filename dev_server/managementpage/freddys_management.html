@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freddy Fazbear's Pizza - Sistema de Gestión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 32px;
+        }
+
+        .brand-info h1 {
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .brand-info p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .user-info strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .nav-bar {
+            background: white;
+            padding: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .nav-bar ul {
+            list-style: none;
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-bar li {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-bar li:hover {
+            background: #f8f9fa;
+            border-bottom-color: #DC143C;
+        }
+
+        .nav-bar li.active {
+            border-bottom-color: #8B0000;
+            font-weight: bold;
+            color: #8B0000;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .metric-icon {
+            font-size: 36px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            border-radius: 12px;
+        }
+
+        .metric-title {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #8B0000;
+            margin: 10px 0;
+        }
+
+        .metric-change {
+            font-size: 13px;
+            color: #28a745;
+        }
+
+        .metric-change.negative {
+            color: #dc3545;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin: 30px 0 20px;
+            color: #333;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 10px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #8B0000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #8B0000;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #DC143C;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .alert {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            border-color: #8B0000;
+            background: #f8f9fa;
+        }
+
+        .action-btn-icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 13px;
+        }
+
+        .inventory-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .inventory-item:last-child {
+            border-bottom: none;
+        }
+
+        .inventory-name {
+            font-weight: 500;
+        }
+
+        .inventory-stock {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .inventory-stock.low {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">🐻</div>
+            <div class="brand-info">
+                <h1>Freddy Fazbear's Pizza</h1>
+                <p>Sistema de Gestión Empresarial</p>
+            </div>
+        </div>
+        <div class="user-info">
+            <strong>👤 Administrador: Henry Emily</strong>
+            <span>Sucursal Principal | 28 Oct 2025, 14:45</span>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <ul>
+            <li class="active">📊 Dashboard</li>
+            <li>🍕 Pedidos</li>
+            <li>📦 Inventario</li>
+            <li>👥 Personal</li>
+            <li>💰 Finanzas</li>
+            <li>⚙️ Configuración</li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="alert">
+            <span class="alert-icon">⚠️</span>
+            <div>
+                <strong>Atención:</strong> El inventario de queso mozzarella está bajo. Se requiere reabastecimiento antes del fin de semana.
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-title">Ventas del Día</div>
+                <div class="metric-value">$3,847.50</div>
+                <div class="metric-change">▲ 12.5% vs ayer</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Pedidos Activos</div>
+                <div class="metric-value">23</div>
+                <div class="metric-change">8 en preparación</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Clientes Hoy</div>
+                <div class="metric-value">147</div>
+                <div class="metric-change">▲ 8.3% vs ayer</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Promedio de Ticket</div>
+                <div class="metric-value">$26.17</div>
+                <div class="metric-change negative">▼ 3.2% vs ayer</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">⚡ Acciones Rápidas</h2>
+        <div class="quick-actions">
+            <div class="action-btn">
+                <span class="action-btn-icon">📝</span>
+                <strong>Nuevo Pedido</strong>
+            </div>
+            <div class="action-btn">
+                <span class="action-btn-icon">📋</span>
+                <strong>Ver Reservaciones</strong>
+            </div>
+            <div class="action-btn">
+                <span class="action-btn-icon">📊</span>
+                <strong>Reportes</strong>
+            </div>
+            <div class="action-btn">
+                <span class="action-btn-icon">🎉</span>
+                <strong>Eventos</strong>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h3 class="card-title">📋 Pedidos Recientes</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pedido #</th>
+                            <th>Cliente</th>
+                            <th>Artículos</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#1247</strong></td>
+                            <td>Mesa 12</td>
+                            <td>2x Pizza Familiar, 1x Soda</td>
+                            <td>$38.50</td>
+                            <td><span class="status-badge status-active">En preparación</span></td>
+                            <td><button class="btn btn-primary">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#1246</strong></td>
+                            <td>Para Llevar - Juan P.</td>
+                            <td>1x Pizza Mediana, 2x Wings</td>
+                            <td>$29.00</td>
+                            <td><span class="status-badge status-pending">Listo</span></td>
+                            <td><button class="btn btn-primary">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#1245</strong></td>
+                            <td>Delivery - María G.</td>
+                            <td>3x Pizza Grande, 3x Soda</td>
+                            <td>$67.50</td>
+                            <td><span class="status-badge status-active">En camino</span></td>
+                            <td><button class="btn btn-primary">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#1244</strong></td>
+                            <td>Mesa 5</td>
+                            <td>1x Pizza Personal, 1x Ensalada</td>
+                            <td>$18.75</td>
+                            <td><span class="status-badge status-completed">Entregado</span></td>
+                            <td><button class="btn btn-secondary">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#1243</strong></td>
+                            <td>Fiesta - Carlos R.</td>
+                            <td>5x Pizza Familiar, 10x Soda, 3x Wings</td>
+                            <td>$156.25</td>
+                            <td><span class="status-badge status-active">En preparación</span></td>
+                            <td><button class="btn btn-primary">Ver</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3 class="card-title">📦 Inventario Crítico</h3>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Queso Mozzarella</span>
+                        <span class="inventory-stock low">15kg ⚠️</span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Pepperoni</span>
+                        <span class="inventory-stock">45kg ✓</span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Masa de Pizza</span>
+                        <span class="inventory-stock low">12 unidades ⚠️</span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Salsa de Tomate</span>
+                        <span class="inventory-stock">28L ✓</span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Bebidas</span>
+                        <span class="inventory-stock">87 unidades ✓</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Ver Inventario Completo</button>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">👥 Personal en Turno</h3>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Mike Schmidt - Cajero</span>
+                        <span class="inventory-stock">● Activo</span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Jeremy Fitzgerald - Cocina</span>
+                        <span class="inventory-stock">● Activo</span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="inventory-name">Fritz Smith - Delivery</span>
+                        <span class="inventory-stock">● Activo</span>
+                    </div>
+                    <div class="inventory-item">
+                        <span class="inventory-name">William Afton - Mantenimiento</span>
+                        <span class="inventory-stock">● Activo</span>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 15px;">Gestionar Personal</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">🎉 Próximos Eventos y Reservaciones</h2>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Evento</th>
+                        <th>Cliente</th>
+                        <th>Personas</th>
+                        <th>Paquete</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>29 Oct 2025</td>
+                        <td>🎂 Cumpleaños Infantil</td>
+                        <td>Familia García</td>
+                        <td>25</td>
+                        <td>Paquete Premium + Show</td>
+                        <td><span class="status-badge status-active">Confirmado</span></td>
+                        <td><button class="btn btn-primary">Detalles</button></td>
+                    </tr>
+                    <tr>
+                        <td>31 Oct 2025</td>
+                        <td>🎃 Fiesta Halloween</td>
+                        <td>Colegio San José</td>
+                        <td>40</td>
+                        <td>Paquete Escolar</td>
+                        <td><span class="status-badge status-active">Confirmado</span></td>
+                        <td><button class="btn btn-primary">Detalles</button></td>
+                    </tr>
+                    <tr>
+                        <td>02 Nov 2025</td>
+                        <td>🎉 Evento Corporativo</td>
+                        <td>Empresa TechCorp</td>
+                        <td>30</td>
+                        <td>Paquete Corporativo</td>
+                        <td><span class="status-badge status-pending">Pendiente</span></td>
+                        <td><button class="btn btn-secondary">Detalles</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025 Freddy Fazbear's Pizza | Fazbear Entertainment Inc. | "Where Fantasy and Fun Come to Life!"<br>
+        Sistema v2.3.1 | Servidor: FFP-SRV-01 (192.168.30.0/28)
+    </div>
+</body>
+</html>
